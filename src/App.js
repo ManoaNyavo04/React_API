@@ -1,23 +1,27 @@
 import logo from './logo.svg';
 import './App.css';
+import UserList from './composant/UserList';
+import UserForm from './composant/UserForm';
+import { User_hook } from './hooks/User_hook';
+import UserListUpdate from './composant/UserListUpdate';
+import UserUpdateForm from './composant/UserUpdateForm';
 
 function App() {
+  const {users, addUser, editingUser, updateUser, editUser, cancelEdit} = User_hook();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Liste users</h1>
+      <UserList users= {users} />
+      <UserForm onUserAdded = {addUser} />
+
+      <UserListUpdate users = {users} onEditUser = {editUser} />
+      {editingUser && (
+                <UserUpdateForm
+                    user={editingUser}
+                    onUpdate={updateUser}
+                    onCancel={cancelEdit}
+                />
+            )}
     </div>
   );
 }
